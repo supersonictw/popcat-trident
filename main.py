@@ -25,7 +25,7 @@ async def pop(session: aiohttp.ClientSession, token: str) -> str:
     async with session.post(url) as response:
         if response.status in [200, 201]:
             result = await response.json()
-            next_token = result["new_token"]
+            next_token = result["Token"]
             data = next_token.split(".")
             if len(data) == 3:
                 missing_padding = 4 - len(data[1]) % 4
@@ -41,7 +41,7 @@ async def pop(session: aiohttp.ClientSession, token: str) -> str:
 
 def get_request_url(token: str) -> str:
     query = {
-        'count': 800,
+        'pop_count': 800,
         'token': token,
         'captcha_token': ''
     }
